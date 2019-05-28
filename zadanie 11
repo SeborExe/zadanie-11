@@ -1,146 +1,237 @@
------Source 1:-----
+-----klasa.cpp:-----
 
-#include "P2.cpp"
-#include <fstream>
-#include <cstdlib>
-#include <conio.h>
-#include <stdio.h>
-
+#include "klasa.h"
+// klasa rekord
 rekord::rekord(char *i, char *n, char *t){
  cout << "Rekord naglowkowy\n";
- strcpy(imie,i);
- strcpy(nazwisko,n);
- strcpy(telefon,t);
+ strcpy(dane1,i);
+ strcpy(dane2,n);
+ strcpy(dane3,t);
  nastepny=NULL;
 };
-rekord::rekord()
-{
+rekord::rekord(){
  cout << "Rekord normalny\n";
 };
-void lista::wyswietl()
-{
+//klasa lista
+void lista::wyswietl(){
  class rekord *obiekt=this->pierwszy;
- while (obiekt!=NULL)
-    {
- cout<<obiekt->imie<<"\t";
- cout<<obiekt->nazwisko<<"\t";
- cout<<obiekt->telefon<<"\n";
+ while (obiekt!=NULL) {
+ cout<<obiekt->dane1<<"\t";
+ cout<<obiekt->dane2<<"\t";
+ cout<<obiekt->dane3<<"\n";
  obiekt=obiekt->nastepny;
  };
 };
-void lista::dodaj(char *i,char *n,char *t)
-{
+void lista::dodaj(char *i,char *n,char *t){
  class rekord *obiekt=this->pierwszy;
- while (obiekt->nastepny!=NULL)
-    {
+ while (obiekt->nastepny!=NULL) {
  obiekt=obiekt->nastepny;
-    };
-};
-{
+ };
  obiekt->nastepny=new rekord;
- strcpy(obiekt->nastepny->imie,i);
- strcpy(obiekt->nastepny->nazwisko,n);
- strcpy(obiekt->nastepny->telefon,t);
+ strcpy(obiekt->nastepny->dane1,i);
+ strcpy(obiekt->nastepny->dane2,n);
+ strcpy(obiekt->nastepny->dane3,t);
  obiekt->nastepny->nastepny=NULL;
 };
 lista::lista(char *i, char *n, char *t) :
-rekord(i,n,t)
-{
+rekord(i,n,t){
  this->pierwszy=this;
 };
 
------source 2:-----
 
-#ifndef P1_H_INCLUDED
-#define P1_H_INCLUDED
+// klasa rekord
+prekord::prekord(char *i, char *n, char *t, char*p){
+ cout << "Rekord naglowkowy\n";
+ strcpy(pane1,i);
+ strcpy(pane2,n);
+ strcpy(pane3,t);
+ strcpy(pane4,p);
+ pnastepny=NULL;
+};
+prekord::prekord(){
+ cout << "Rekord normalny\n";
+};
+//klasa lista
+void plista::pwyswietl(){
+ class prekord *pobiekt=this->ppierwszy;
+ while (pobiekt!=NULL) {
+ cout<<pobiekt->pane1<<"\t";
+ cout<<pobiekt->pane2<<"\t";
+ cout<<pobiekt->pane3<<"\t";
+ cout<<pobiekt->pane4<<"\n";
+ pobiekt=pobiekt->pnastepny;
+ };
+};
+void plista::pdodaj(char *i,char *n,char *t, char*p){
+ class prekord *pobiekt=this->ppierwszy;
+ while (pobiekt->pnastepny!=NULL) {
+ pobiekt=pobiekt->pnastepny;
+ };
+ pobiekt->pnastepny=new prekord;
+ strcpy(pobiekt->pnastepny->pane1,i);
+ strcpy(pobiekt->pnastepny->pane2,n);
+ strcpy(pobiekt->pnastepny->pane3,t);
+ strcpy(pobiekt->pnastepny->pane4,p);
+ pobiekt->pnastepny->pnastepny=NULL;
+};
+plista::plista(char *i, char *n, char *t, char*p) :
+prekord(i,n,t,p){
+ this->ppierwszy=this;
+};
+
+
+-----main.cpp:-----
+
+#include "klasa.h"
+#include <iostream>
+#include <windows.h>
+#include <conio.h>
+
+char Dane1[10];
+char Dane2[10];
+char Dane3[10];
+
+char Marka1[10];
+char Marka2[10];
+char Marka3[10];
+char Marka4[10];
+int wybor;
+int wybbaz;
+
+
+int main() {
+
+    cout<<"Wybierz baze ktora chcesz zarzadzac: 1 - Osoba ; 2 - Samochod ";
+    wybbaz=getch();
+
+    if(wybbaz==49)
+        {
+class lista *baza;
+ baza=new lista();
+
+ do
+    {
+system("cls");
+
+cout<<"-----MENU GLOWNE-----"<<endl;
+cout<< "                     "<<endl;
+cout<<"1. Dodaj do bazy danych"<<endl;
+cout<<"2. Wyswietl baze danych"<<endl;
+cout<<"3. Koniec"<<endl;
+
+wybor=getch();
+
+switch(wybor)
+{
+case 49:
+cout<<"Imie:";
+cin>>Dane1;
+cout<<"Nazwisko:";
+cin>>Dane2;
+cout<<"Telefon:";
+cin>>Dane3;
+ baza->dodaj(Dane1,Dane2,Dane3);
+break;
+case 50:
+baza->wyswietl();
+getch();
+break;
+case 51:
+break;
+};
+}while(wybor!=51);
+    };
+
+
+    if(wybbaz==50){
+
+    class plista *pbaza;
+ pbaza=new plista();
+
+ do{
+system("cls");
+
+cout<<"-----MENU GLOWNE-----"<<endl;
+cout<< "                     "<<endl;
+cout<<"1. Dodaj do bazy danych"<<endl;
+cout<<"2. Wyswietl baze danych"<<endl;
+cout<<"3. Koniec"<<endl;
+
+wybor=getch();
+
+switch(wybor){
+case 49:
+cout<<"Marka:";
+cin>>Marka1;
+cout<<"Typ:";
+cin>>Marka2;
+cout<<"Rok:";
+cin>>Marka3;
+cout<<"Cena:";
+cin>>Marka4;
+ pbaza->pdodaj(Marka1,Marka2,Marka3, Marka4);
+break;
+case 50:
+pbaza->pwyswietl();
+getch();
+break;
+case 51:
+break;
+};
+}while(wybor!=51);
+    }
+
+};
+
+-----klasa.h-----
 #include <iostream>
 #include <string.h>
-
 using namespace std;
-
-class rekord
-{
+// klasa rekord
+class rekord {
 private:
 public:
-char imie[10];
- char nazwisko[25];
- char telefon[10];
+ char dane1[10];
+ char dane2[10];
+ char dane3[10];
  class rekord *nastepny;
  rekord(char *i,char *n,char *t);
  rekord();
 };
-
-#endif // P1_H_INCLUDED
-
------head-----
-
-#include "P1.h"
-#include "P2.cpp"
-#include <conio.h>
-#include <cstdlib>
-#include <conio.h>
-#include <stdio.h>
-#include <string>
-#include <iostream>
-#include <string.h>
-#include <fstream>
-
-using namespace std;
-
-
-int main()
-{
-class lista *baza;
- baza=new lista();
- baza->dodaj("Jan","Nowak","1");
- baza->dodaj("Jan","Nowak","2");
- baza->dodaj("Jan","Nowak","3");
- baza->wyswietl();
-
-
-//menu
-cout << "MENU GLOWNE" << endl;
-cout << "--------------------------"<<endl;
-cout << "1. Pobierz/wprowadz dane" << endl;
-cout << "2. Usun dane z pamieci" << endl;
-cout << "3. Wyswietl dane" << endl;
-cout << "4. Koniec" << endl;
-cout << "--------------------------"<<endl;
-//program
-do
-{
-    fflush(stdin);
-    cout << "Twoj wybor: " << endl;
-    znak=getch();
-    switch(znak)
-    {
-   case '1':
-       class lista *baza;
- baza=new lista();
- baza->dodaj("jAN","Nowak","1");
- baza->dodaj("Jan","Nowak","2");
- baza->dodaj("Jan","Nowak","3");
- baza->wyswietl();
-
-        break;
-    case '2':
-        lista->wyswietl();
-        lista->kasuj(2);
-        lista->wyswietl();
-        break;
-    case '3':
-        lista->wyswietl();
-        break;
-    case '4':
-        cout << "Koniec" << endl;
-        break;
-    default:
-        cout << "Wybierz ponownie sposrod opcji 1-4!" << endl;
-    }
-}
-while(znak!='4');
-delete lista;
-return 0;
+//klasa lista
+class lista : public rekord {
+private:
+ class rekord *pierwszy;
+public:
+ void wyswietl();
+ void dodaj(char *i,char *n,char *t);
+ lista(char *i="Imie", char
+*n="Nazwisko", char *t="Telefon");
 };
+
+
+//rekord
+class prekord {
+private:
+public:
+ char pane1[10];
+ char pane2[10];
+ char pane3[10];
+ char pane4[10];
+ class prekord *pnastepny;
+ prekord(char *i,char *n,char *t, char*p);
+ prekord();
+};
+//klasa lista
+class plista : public prekord {
+private:
+ class prekord *ppierwszy;
+public:
+ void pwyswietl();
+ void pdodaj(char *i,char *n,char *t, char*p);
+ plista(char *i="Marka", char
+*n="Typ", char *t="Rok", char*p="Cena");
+};
+
 
 
